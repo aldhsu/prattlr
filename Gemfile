@@ -34,6 +34,9 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'thin'
 gem 'websocket-rails'
 gem 'twitter-bootstrap-rails'
+group :production do
+  gem 'rails_12factor'
+end
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
