@@ -12,7 +12,7 @@ WebsocketRails::EventMap.describe do
   #   end
   # The above will handle an event triggered on the client like `product.new`.
 end
-
+# courtesy of PogoApp https://github.com/themgt/ws42-chat.git
 WebsocketRails::EventMap.describe do
   subscribe :client_connected, to: ChatController, with_method: :client_connected
   subscribe :new_message, to: ChatController, with_method: :new_message
