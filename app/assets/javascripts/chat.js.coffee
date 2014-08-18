@@ -1,3 +1,4 @@
+# # courtesy of PogoApp https://github.com/themgt/ws42-chat.git
 jQuery ->
   window.chatController = new Chat.Controller($('#chat').data('uri'), true);
 
