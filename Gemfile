@@ -47,7 +47,7 @@ group :development, :test do
   gem 'simplecov'
 end
 
-group :developemnt do
+group :development do
   gem 'better_errors'
   gem 'pry-rails'
   gem 'binding_of_caller'

@@ -75,3 +75,8 @@ class Chat.Controller
     $('#username').html @user.user_name
     $('input#user_name').val @user.user_name
     @dispatcher.trigger 'new_user', @user.serialize()
+
+  loginUser: =>
+    $('#sign-in-ajax').on 'ajax:success', (xhr, data) ->
+      console.log(data)
+    @user = new Chat.user()
