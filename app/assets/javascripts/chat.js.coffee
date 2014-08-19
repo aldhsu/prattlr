@@ -1,6 +1,14 @@
 # # courtesy of PogoApp https://github.com/themgt/ws42-chat.git
 jQuery ->
   window.chatController = new Chat.Controller($('#chat').data('uri'), true);
+  # Listen to sign in
+  $('#sign-in-ajax').on 'ajax:success', (xhr, data) ->
+    try
+      window.chatController.loginUser(data.username)
+      console.log(this)
+      $(this).slideToggle()
+    catch
+      console.log('no user')
 
 window.Chat = {}
 
@@ -13,7 +21,7 @@ class Chat.Controller
     html =
       """
       <div class="message" >
-        <label class="label label-info">
+        <label class="label label-info" message-id ='#{message.msg_id}'>
           [#{message.received}] #{message.user_name}
         </label>&nbsp;
         #{message.msg_body}
@@ -30,7 +38,6 @@ class Chat.Controller
   constructor: (url,useWebSockets) ->
     @messageQueue = []
     @dispatcher = new WebSocketRails(url,useWebSockets)
-    @dispatcher.on_open = @createGuestUser
     @bindEvents()
 
   bindEvents: =>
@@ -50,8 +57,10 @@ class Chat.Controller
     message = $('#message').val()
     @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message}
     $('#message').val('')
+    console.log('sent')
 
   updateUserList: (userList) =>
+    console.log(userList)
     $('#user-list').html @userListTemplate(userList)
 
   updateUserInfo: (event) =>
@@ -72,11 +81,12 @@ class Chat.Controller
   createGuestUser: =>
     rand_num = Math.floor(Math.random()*1000)
     @user = new Chat.User("Guest_" + rand_num)
-    $('#username').html @user.user_name
-    $('input#user_name').val @user.user_name
+    $('#username-display').html @user.user_name
+    # $('input#user_name').val @user.user_name
     @dispatcher.trigger 'new_user', @user.serialize()
 
-  loginUser: =>
-    $('#sign-in-ajax').on 'ajax:success', (xhr, data) ->
-      console.log(data)
-    @user = new Chat.user()
+  loginUser: (name) =>
+    @user = new Chat.User(name)
+    $('#username-display').html @user.user_name
+    @dispatcher.trigger 'new_user', @user.serialize()
+
