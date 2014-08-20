@@ -11,6 +11,7 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #  parent_message :integer
+#  room_id        :integer
 #
 
 require 'rails_helper'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819013731) do
+ActiveRecord::Schema.define(version: 20140819110218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,22 @@ ActiveRecord::Schema.define(version: 20140819013731) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "parent_message"
+    t.integer  "room_id"
   end
+
+  create_table "rooms", force: true do |t|
+    t.string   "topic"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rooms_users", id: false, force: true do |t|
+    t.integer "room_id"
+    t.integer "user_id"
+  end
+
+  add_index "rooms_users", ["room_id", "user_id"], name: "index_rooms_users_on_room_id_and_user_id", using: :btree
+  add_index "rooms_users", ["user_id"], name: "index_rooms_users_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"

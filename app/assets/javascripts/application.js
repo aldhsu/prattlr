@@ -15,4 +15,4 @@
 //= require twitter/bootstrap
 //= require_tree .
 //= require websocket_rails/main
-
+//= require lib/backbone
