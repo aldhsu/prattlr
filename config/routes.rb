@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
+  get 'user/create'
+
+  get 'user/new'
+
   root to: 'public#index'
-  resources :sessions
+  resources :sessions, only: [:create, :destroy]
+  resources :messages, only: [:index]
+  resources :users, only: [:create, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

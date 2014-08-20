@@ -11,8 +11,27 @@
 
 .msg {
   margin-left: 2px;
+  margin-bottom: 0;
   display: inline-block;
 }
+
+#chat{
+  word-wrap: break-word;
+}
+
 .hidden {
   opacity: 0;
+}
+
+.message {
+  width: 100%;
+}
+
+.load-more {
+  display: block;
+  text-align: center;
+  text-decoration: underline;
+  a {
+    margin-right: 5px;
+  }
 }

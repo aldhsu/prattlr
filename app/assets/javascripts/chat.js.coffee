@@ -10,10 +10,10 @@ class Chat.Controller
     html =
       """
       <div class="message" message-id ='#{message.msg_id}'>
-        <label class="label label-info" >
+        <div class="label label-info" >
           [#{message.received}] #{message.user_name}
-        </label>
-        <p class="msg">#{message.msg_body}<p>
+        </div>
+        <div class="msg">#{message.msg_body}</div>
       </div>
       """
     $(html)
@@ -28,6 +28,7 @@ class Chat.Controller
     @messageQueue = []
     @dispatcher = new WebSocketRails(url,useWebSockets)
     @bindEvents()
+    @loadMore()
 
   bindEvents: =>
     @dispatcher.bind 'new_message', @newMessage
@@ -49,7 +50,6 @@ class Chat.Controller
     console.log('sent')
 
   updateUserList: (userList) =>
-    console.log(userList)
     $('#user-list').html @userListTemplate(userList)
 
   updateUserInfo: (event) =>
@@ -58,9 +58,14 @@ class Chat.Controller
     @dispatcher.trigger 'change_username', @user.serialize()
 
   appendMessage: (message) ->
+    model = new app.Message()
+    bbmessage = new app.MessageView({})
+    $('#chat').append(bbmessage.render())
+    console.log(bbmessage)
     messageTemplate = @template(message)
     $('#chat').append messageTemplate
     messageTemplate.slideDown 140
+    $('#chat').scrollTop($('#chat')[0].scrollHeight)
 
   shiftMessageQueue: =>
     @messageQueue.shift()
@@ -79,3 +84,13 @@ class Chat.Controller
     $('#username-display').html 'Signed in as ' + @user.user_name
     @dispatcher.trigger 'new_user', @user.serialize()
 
+  loadMore: =>
+    html =
+      """
+        <p class="load-more">
+          <a href='#' id='load-all'>Load All</a>
+          <a href='#' id='load-older'>Load Older</a>
+        </p>
+      """
+    $('#chat').prepend(html)
+    $('#chat').scrollTop(5)
