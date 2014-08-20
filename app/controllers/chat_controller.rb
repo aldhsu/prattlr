@@ -31,8 +31,10 @@ class ChatController < WebsocketRails::BaseController
 
   def new_message
     user = User.find_by(username: data[:user_name])
-    message = Message.create(content: data[:msg_body], user_id: user.id)
-    user_msg :new_message, data[:msg_body].dup, message.id
+    if user
+      message = Message.create(content: data[:msg_body], user_id: user.id)
+      user_msg :new_message, data[:msg_body].dup, message.id
+    end
   end
 
   def new_user

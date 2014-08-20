@@ -1,15 +1,4 @@
 # # courtesy of PogoApp https://github.com/themgt/ws42-chat.git
-jQuery ->
-  window.chatController = new Chat.Controller($('#chat').data('uri'), true);
-  # Listen to sign in
-  $('#sign-in-ajax').on 'ajax:success', (xhr, data) ->
-    try
-      window.chatController.loginUser(data.username)
-      console.log(this)
-      $(this).slideToggle()
-    catch
-      console.log('no user')
-
 window.Chat = {}
 
 class Chat.User
@@ -20,11 +9,11 @@ class Chat.Controller
   template: (message) ->
     html =
       """
-      <div class="message" >
-        <label class="label label-info" message-id ='#{message.msg_id}'>
+      <div class="message" message-id ='#{message.msg_id}'>
+        <label class="label label-info" >
           [#{message.received}] #{message.user_name}
-        </label>&nbsp;
-        #{message.msg_body}
+        </label>
+        <p class="msg">#{message.msg_body}<p>
       </div>
       """
     $(html)
@@ -34,7 +23,7 @@ class Chat.Controller
     for user in userList
       userHtml = userHtml + "<li>#{user.user_name}</li>"
     $(userHtml)
-
+  # constructor is automatically run when on new instantiation(uri passed from chat window, true on useWS)
   constructor: (url,useWebSockets) ->
     @messageQueue = []
     @dispatcher = new WebSocketRails(url,useWebSockets)
@@ -87,6 +76,6 @@ class Chat.Controller
 
   loginUser: (name) =>
     @user = new Chat.User(name)
-    $('#username-display').html @user.user_name
+    $('#username-display').html 'Signed in as ' + @user.user_name
     @dispatcher.trigger 'new_user', @user.serialize()
 
