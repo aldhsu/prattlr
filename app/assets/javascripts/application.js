@@ -15,7 +15,7 @@
 //= require twitter/bootstrap
 //= require lib/underscore
 //= require_tree ./lib
-//= require_tree ./app/models
+//= require app/models/message
 //= require chat
 //= require_tree .
 //= require websocket_rails/main
