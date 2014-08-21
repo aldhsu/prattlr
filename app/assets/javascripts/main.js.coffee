@@ -9,15 +9,15 @@ jQuery ->
   }
   # Listener setup
   window.chatController = new Chat.Controller($('#chat').data('uri'), true);
-  # Listen to sign in and handle
   app.context = {}
+  # Listen to sign in and handle
   $('#sign-in-ajax').on 'ajax:success', (xhr, data) ->
     try
-      $(this).slideToggle()
       signIn(data)
+      $(this).slideToggle()
+      $('#sign-up-button').slideToggle()
     catch
-      console.log('no user')
-
+      $(this).velocity('callout.shake')
   # Load all older ones on click
   $('#load-all').on 'click', ->
     $target = $('<div>')
@@ -34,6 +34,10 @@ jQuery ->
       )
     $('#chat').prepend($target)
     $(this).parent().remove()
+  # Sign Up listen
+  $('#sign-up-button').click ->
+    window.location.href = '/users/new'
+
 # Helpers
 signIn = (data) ->
   username = data.username

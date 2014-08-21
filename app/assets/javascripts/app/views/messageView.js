@@ -15,7 +15,7 @@ app.MessageView = Backbone.View.extend({
     return this.$el;
   },
   toggleFoldIn: function(event) {
-    console.log(event);
+    this.$el.next();
   },
 
   reply: function(event) {

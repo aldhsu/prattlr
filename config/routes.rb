@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root to: 'public#index'
   resources :sessions, only: [:create, :destroy]
   resources :messages, only: [:index]
-  resources :users, only: [:create, :destroy]
+  resources :users, only: [:new, :create, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
