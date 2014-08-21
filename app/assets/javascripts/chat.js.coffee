@@ -61,7 +61,7 @@ class Chat.Controller
     view = new app.MessageView({model: model})
     if model.get('parent_id')
       $div = $($("[data-message-id=#{model.get('parent_id')}]").parent('div')[0])
-      viewsomething.css('margin-left', (parseInt($div.css('margin-left')) + 5
+      view.css('margin-left', (parseInt($div.css('margin-left')) + 5))
       $div.after(view.render())
     else
       $('#chat').append(view.render())
