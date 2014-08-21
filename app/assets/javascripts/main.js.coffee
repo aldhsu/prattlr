@@ -15,7 +15,7 @@ jQuery ->
     try
       signIn(data)
       $(this).slideToggle()
-      $('#sign-up-button').slideToggle()
+      $('#sign-up-button').toggle()
     catch
       $(this).velocity('callout.shake')
   # Load all older ones on click
