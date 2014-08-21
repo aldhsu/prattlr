@@ -32,7 +32,7 @@ jQuery ->
       _.each(app.messages.sortBy((message)->
         return message.created_at
         ).reverse(), (message) ->
-          message.attributes.created_at = moment(message.attributes.created_at).format('DD MMM HH:mm')
+          message.set('created_at', moment(message.get('created_at')).format('DD MMM HH:mm'))
           view = new app.MessageView({model: message})
           $('#chat').prepend(view.render())
       )

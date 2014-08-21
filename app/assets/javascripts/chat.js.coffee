@@ -58,7 +58,7 @@ class Chat.Controller
     @dispatcher.trigger 'change_username', @user.serialize()
 
   appendMessage: (message) ->
-    model = new app.Message()
+    model = new app.Message({})
     bbmessage = new app.MessageView({})
     $('#chat').append(bbmessage.render())
     console.log(bbmessage)
