@@ -16,13 +16,15 @@ class ChatController < WebsocketRails::BaseController
     }
   end
 
-  def user_msg(ev, msg, id)
-    broadcast_message ev, {
-      msg_id: id,
-      username:  connection_store[:user][:user_name],
-      created_at:   Time.now.to_s(:short),
-      content:   ERB::Util.html_escape(msg)
-      }
+  # def user_msg(ev, msg, id)
+  def user_msg(ar_message)
+    # broadcast_message ev, {
+    #   msg_id: id,
+    #   username:  connection_store[:user][:user_name],
+    #   created_at:   Time.now.to_s(:short),
+    #   content:   ERB::Util.html_escape(msg)
+    #   }
+    broadcast_message :new_message, ar_message.as_json(:include => {:user => {:only => :username}})
   end
 
   def client_connected
@@ -32,8 +34,9 @@ class ChatController < WebsocketRails::BaseController
   def new_message
     user = User.find_by(username: data[:user_name])
     if user
-      message = Message.create(content: data[:msg_body], user_id: user.id)
-      user_msg :new_message, data[:msg_body].dup, message.id
+      message = Message.create(content: data[:msg_body], user_id: user.id, parent_id: data[:parent_id])
+      # user_msg :new_message, data[:msg_body].dup, message.id
+      user_msg message
     end
   end
 

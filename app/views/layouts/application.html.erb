@@ -88,13 +88,23 @@
   </div>
 </div> <!-- /container -->
 <script id='message-view' type='text/template'>
-  <div class="message" message-id ='#{message.msg_id}'>
-    <label class="label label-info" >
+  <div class="message" data-message-id ='{{id}}' id='message_{{id}}'>
+    <label class="label label-info identifier" >
       [{{created_at}}] {{user.username}}
     </label>
     <div class="msg">{{content}}<div>
   </div>
 </script>
 
+<script id='reply-view' type='text/template'>
+  <div id="replying-to">Replying To</div>
+  <div class="message" data-message-id ='{{id}}'>
+    <label class="label label-info" >
+      [{{created_at}}] {{user.username}}
+    </label>
+    <div class="msg reply">{{content}}</div>
+    <button class='btn btn-secondary pull-right'>Cancel</button>
+  </div>
+</script>
   </body>
 </html>

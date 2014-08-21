@@ -1,4 +1,8 @@
-# # courtesy of PogoApp https://github.com/themgt/ws42-chat.git
+# Helpers
+app.changeDate = (message) ->
+  message.set('created_at', moment(message.get('created_at')).format('HH:mm:ss DD/MM/YY'))
+
+# courtesy of PogoApp https://github.com/themgt/ws42-chat.git
 window.Chat = {}
 
 class Chat.User
@@ -6,17 +10,6 @@ class Chat.User
   serialize: => { user_name: @user_name }
 
 class Chat.Controller
-  template: (message) ->
-    html =
-      """
-      <div class="message" message-id ='#{message.msg_id}'>
-        <div class="label label-info" >
-          [#{message.received}] #{message.user_name}
-        </div>
-        <div class="msg">#{message.msg_body}</div>
-      </div>
-      """
-    $(html)
 
   userListTemplate: (userList) ->
     userHtml = ""
@@ -35,7 +28,7 @@ class Chat.Controller
     @dispatcher.bind 'user_list', @updateUserList
     $('input#user_name').on 'keyup', @updateUserInfo
     $('#send').on 'click', @sendMessage
-    $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13
+    $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13 #run click if keypress = enter
 
   newMessage: (message) =>
     @messageQueue.push message
@@ -45,7 +38,11 @@ class Chat.Controller
   sendMessage: (event) =>
     event.preventDefault()
     message = $('#message').val()
-    @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message}
+    if app.context.reply
+      console.log(app.context.reply)
+      @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, parent_id: app.context.reply}
+    else
+      @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message}
     $('#message').val('')
     console.log('sent')
 
@@ -58,13 +55,16 @@ class Chat.Controller
     @dispatcher.trigger 'change_username', @user.serialize()
 
   appendMessage: (message) ->
-    model = new app.Message({})
-    bbmessage = new app.MessageView({})
-    $('#chat').append(bbmessage.render())
-    console.log(bbmessage)
-    messageTemplate = @template(message)
-    $('#chat').append messageTemplate
-    messageTemplate.slideDown 140
+    model = new app.Message()
+    model.attributes = message
+    app.changeDate(model)
+    view = new app.MessageView({model: model})
+    if model.get('parent_id')
+      $div = $($("[data-message-id=#{model.get('parent_id')}]").parent('div')[0])
+      viewsomething.css('margin-left', (parseInt($div.css('margin-left')) + 5
+      $div.after(view.render())
+    else
+      $('#chat').append(view.render())
     $('#chat').scrollTop($('#chat')[0].scrollHeight)
 
   shiftMessageQueue: =>

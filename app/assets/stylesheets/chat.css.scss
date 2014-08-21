@@ -13,8 +13,19 @@
   margin-left: 2px;
   margin-bottom: 0;
   display: inline-block;
+  word-wrap: break-word;
+  width: 75%;
+  &.reply {
+    width: 65%;
+  }
 }
 
+
+.identifier {
+  width: 20%;
+  vertical-align: top;
+  padding-top: 1px;
+}
 #chat{
   word-wrap: break-word;
 }
@@ -27,11 +38,15 @@
   width: 100%;
 }
 
-.load-more {
+.load-more, #replying-to {
   display: block;
   text-align: center;
   text-decoration: underline;
   a {
     margin-right: 5px;
   }
+}
+
+.reply-message {
+  margin-bottom: 15px;
 }
