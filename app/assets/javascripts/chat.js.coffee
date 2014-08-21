@@ -2,6 +2,10 @@
 app.changeDate = (message) ->
   message.set('created_at', moment(message.get('created_at')).format('HH:mm:ss DD/MM/YY'))
 
+app.getIndent = (view, message) ->
+  $div = $($("[data-message-id=#{message.get('parent_id')}]").parent('div')[0])
+  $div.after(view.render(parseInt($div.css('margin-left'))))
+
 # courtesy of PogoApp https://github.com/themgt/ws42-chat.git
 window.Chat = {}
 
@@ -60,9 +64,7 @@ class Chat.Controller
     app.changeDate(model)
     view = new app.MessageView({model: model})
     if model.get('parent_id')
-      $div = $($("[data-message-id=#{model.get('parent_id')}]").parent('div')[0])
-      view.css('margin-left', (parseInt($div.css('margin-left')) + 5))
-      $div.after(view.render())
+      app.getIndent(view, model)
     else
       $('#chat').append(view.render())
     $('#chat').scrollTop($('#chat')[0].scrollHeight)

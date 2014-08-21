@@ -11,6 +11,7 @@ app.MessageView = Backbone.View.extend({
     var temp = Handlebars.compile(app.templates.messageView);
     var html = temp(this.model.toJSON());
     this.$el.html(html);
+    this.$el.css('margin-left', (left + 5)+'px');
     return this.$el;
   },
   toggleFoldIn: function(event) {

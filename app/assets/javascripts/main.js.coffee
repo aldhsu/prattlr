@@ -28,7 +28,7 @@ jQuery ->
           app.changeDate(message)
           view = new app.MessageView({model: message})
           if message.get('parent_id')
-            $target.find("[data-message-id=#{message.get('parent_id')}]").parent('div').after(view.render())
+            app.getIndent(view, message)
           else
             $target.append(view.render())
       )
