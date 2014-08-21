@@ -43,7 +43,7 @@
                 <div class="btn-group hidden" id="user-settings">
                   <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="icon-user"></i>
-                    <span id="username-display"><%= 'Signed in as' + @current_user.username if @current_user%></span>
+                    <span id="username-display" data-user-name="<%= @current_user.username if @current_user %>" data-user-id="<%= @current_user.id if @current_user %>"><%= 'Signed in as ' + @current_user.username if @current_user%></span>
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">

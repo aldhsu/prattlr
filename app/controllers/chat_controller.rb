@@ -51,6 +51,7 @@ class ChatController < WebsocketRails::BaseController
   end
 
   def delete_user
+    puts 'deleting user'
     connection_store[:user] = nil
     system_msg "client #{client_id} disconnected"
     broadcast_user_list

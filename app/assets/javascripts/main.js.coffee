@@ -1,3 +1,25 @@
+# Helpers
+signIn = (data) ->
+  username = data.username
+  $("#username-display").attr('data-user-id', data.id)
+  $('#sign-in-ajax').slideToggle()
+  $('#sign-up-button').toggle()
+  window.chatController.loginUser(username)
+  $('#user-settings').toggleClass 'hidden'
+
+logOut = ->
+  username = $("#username-display").attr('data-user-name')
+  userid = $("#username-display").attr('data-user-id')
+  window.chatController.logoutUser(username)
+  $.ajax({
+    url: "/sessions/#{userid}",
+    method: 'delete',
+    success: (xhr, data) ->
+      $('#sign-up-button').toggle()
+      $('#sign-in-ajax').toggle()
+      $('#user-settings').toggleClass 'hidden'
+      })
+
 # Setup Backbone
 app.messages = new app.Messages
 
@@ -10,14 +32,18 @@ jQuery ->
   # Listener setup
   window.chatController = new Chat.Controller($('#chat').data('uri'), true);
   app.context = {}
+
+  # Check for already signed in
+  if (username = $("#username-display").attr('data-user-name')) != ""
+    signIn({username: username})
+
   # Listen to sign in and handle
   $('#sign-in-ajax').on 'ajax:success', (xhr, data) ->
     try
       signIn(data)
-      $(this).slideToggle()
-      $('#sign-up-button').toggle()
     catch
       $(this).velocity('callout.shake')
+
   # Load all older ones on click
   $('#load-all').on 'click', ->
     $target = $('<div>')
@@ -34,17 +60,11 @@ jQuery ->
       )
     $('#chat').prepend($target)
     $(this).parent().remove()
+
   # Sign Up listen
   $('#sign-up-button').click ->
     window.location.href = '/users/new'
+  #Listen to logout
+  $('#logout').on 'click', ->
+    logOut()
 
-# Helpers
-signIn = (data) ->
-  username = data.username
-  window.chatController.loginUser(username)
-  $('#user-settings').toggleClass 'hidden'
-
-logOut = ->
-  $.ajax(
-    url: '/'
-      )

@@ -86,6 +86,9 @@ class Chat.Controller
     $('#username-display').html 'Signed in as ' + @user.user_name
     @dispatcher.trigger 'new_user', @user.serialize()
 
+  logoutUser: (name) =>
+    @dispatcher.trigger 'delete_user', @user.serialize()
+
   loadMore: =>
     html =
       """
