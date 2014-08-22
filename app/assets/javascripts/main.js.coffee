@@ -18,7 +18,8 @@ logOut = ->
       $('#sign-up-button').toggle()
       $('#sign-in-ajax').toggle()
       $('#user-settings').toggleClass 'hidden'
-      })
+      window.location.href = '/'
+  })
 
 # Setup Backbone
 app.messages = new app.Messages
@@ -37,6 +38,8 @@ jQuery ->
   if (username = $("#username-display").attr('data-user-name')) != ""
     signIn({username: username})
 
+  # Check Url
+  console.log(window.location.pathname)
   # Listen to sign in and handle
   $('#sign-in-ajax').on 'ajax:success', (xhr, data) ->
     try

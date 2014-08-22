@@ -4,6 +4,12 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       redirect_to root_path
+    else
+      if User.find_by(username: params[:user][:username])
+        redirect_to new_user_path, flash: {notice: "Username already taken."}
+      else
+        redirect_to new_user_path, flash: {notice: "Passwords error."}
+      end
     end
   end
 

@@ -1,12 +1,12 @@
 <%= form_for @user do |f| %>
   <%= f.label :username %>
-  <%= f.text_field :username %>
+  <%= f.text_field :username, class: 'input-block-level' %>
 
   <%= f.label :password %>
-  <%= f.password_field :password %>
+  <%= f.password_field :password, class: 'input-block-level' %>
 
   <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %>
+  <%= f.password_field :password_confirmation, class: 'input-block-level' %>
 
   <%= f.submit class: 'btn' %>
 <% end %>

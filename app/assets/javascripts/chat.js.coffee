@@ -94,7 +94,6 @@ class Chat.Controller
       """
         <p class="load-more">
           <a href='#' id='load-all'>Load All</a>
-          <a href='#' id='load-older'>Load Older</a>
         </p>
       """
     $('#chat').prepend(html)

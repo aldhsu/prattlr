@@ -4,6 +4,7 @@
 .label-info {
   display: inline !important;
 }
+
 #chat {
   height: 290px;
   overflow: auto;
@@ -15,6 +16,7 @@
   display: inline-block;
   word-wrap: break-word;
   width: 75%;
+  cursor: crosshair;
   &.reply {
     width: 65%;
   }
