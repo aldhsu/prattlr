@@ -4,7 +4,7 @@ app.changeDate = (message) ->
 
 app.getIndent = (view, message) ->
   $div = $($("[data-message-id=#{message.get('parent_id')}]").parent('div')[0])
-  $div.after(view.render(parseInt($div.css('margin-left'))))
+  $div.append(view.render(parseInt($div.css('margin-left'))))
 
 # courtesy of PogoApp https://github.com/themgt/ws42-chat.git
 window.Chat = {}
