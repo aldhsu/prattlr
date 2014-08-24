@@ -6,7 +6,7 @@ app.getIndent = (view, message) ->
   $div = $($("[data-message-id=#{message.get('parent_id')}]").parent('div')[0])
   $div.append(view.render(parseInt($div.css('margin-left'))))
 
-# courtesy of PogoApp https://github.com/themgt/ws42-chat.git
+# modified from of PogoApp https://github.com/themgt/ws42-chat.git
 window.Chat = {}
 
 class Chat.User
@@ -14,7 +14,6 @@ class Chat.User
   serialize: => { user_name: @user_name }
 
 class Chat.Controller
-
   userListTemplate: (userList) ->
     userHtml = ""
     for user in userList
@@ -78,7 +77,6 @@ class Chat.Controller
     rand_num = Math.floor(Math.random()*1000)
     @user = new Chat.User("Guest_" + rand_num)
     $('#username-display').html @user.user_name
-    # $('input#user_name').val @user.user_name
     @dispatcher.trigger 'new_user', @user.serialize()
 
   loginUser: (name) =>

@@ -22,7 +22,7 @@ logOut = ->
   })
 
 # Setup Backbone
-app.messages = new app.Messages
+app.messages = new app.Messages()
 
 jQuery ->
   # Template Get
@@ -52,10 +52,12 @@ jQuery ->
     $target = $('<div>')
     app.messages.fetch().done ->
       _.each(app.messages.sortBy((message)->
-        return message.get('created_at')
+        return message.get('created_at') # sorted by time created
         ), (message) ->
+          # each changeDate to short
           app.changeDate(message)
           view = new app.MessageView({model: message})
+          #indentation
           if message.get('parent_id')
             app.getIndent(view, message)
           else
