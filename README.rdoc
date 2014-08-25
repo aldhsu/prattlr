@@ -14,6 +14,6 @@ How:
      - Backbone to for templating DOM elements and behaviours
      
 Link:
-     {Prattlr}[http://prattlr.herokuapp.com]
+{Prattlr}[http://prattlr.herokuapp.com]
 
 Worklog:
