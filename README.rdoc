@@ -4,10 +4,16 @@ Project 3
 
 Attempt to create real time threaded chat similar to Reddit comment system in real time.
 
-Why: - interest in using new technologies like websockets
+Why: 
+     - interest in using new technologies like websockets
      - fill gap in between somewhere like StackOverflow and MIRC support channels
 
-How: - based on borrowed code from PogoApp example
+How: 
+     - based on borrowed code from PogoApp example
      - Rails backend to handle persistence
+     - Backbone to for templating DOM elements and behaviours
+     
+Link:
+     {Prattlr}[http://prattlr.herokuapp.com]
 
 Worklog:
