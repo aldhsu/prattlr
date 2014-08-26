@@ -36,6 +36,7 @@ gem 'websocket-rails'
 gem 'twitter-bootstrap-rails'
 group :production do
   gem 'rails_12factor'
+  gem 'newrelic_rpm'
 end
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
