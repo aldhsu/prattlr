@@ -23,15 +23,22 @@ class Chat.Controller
   constructor: (url,useWebSockets) ->
     @messageQueue = []
     @dispatcher = new WebSocketRails(url,useWebSockets)
+    @private_chan = @dispatcher.subscribe('test_room')
+    @private_chan.trigger('new_message', {msg_body: 'chatting in channel'})
     @bindEvents()
     @loadMore()
 
   bindEvents: =>
-    @dispatcher.bind 'new_message', @newMessage
-    @dispatcher.bind 'user_list', @updateUserList
+    # @dispatcher.bind 'new_message', @newMessage
+    # @dispatcher.bind 'user_list', @updateUserList
+    # $('input#user_name').on 'keyup', @updateUserInfo
+    # $('#send').on 'click', @sendMessage
+    # $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13 #run click if keypress = enter
+    @private_chan.bind 'new_message', @newMessage
+    @private_chan.bind 'user_list', @updateUserList
     $('input#user_name').on 'keyup', @updateUserInfo
     $('#send').on 'click', @sendMessage
-    $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13 #run click if keypress = enter
+    $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13 #run click if keypress =
 
   newMessage: (message) =>
     @messageQueue.push message
@@ -55,7 +62,7 @@ class Chat.Controller
   updateUserInfo: (event) =>
     @user.user_name = $('input#user_name').val()
     $('#username').html @user.user_name
-    @dispatcher.trigger 'change_username', @user.serialize()
+    @private_chan.trigger 'change_username', @user.serialize()
 
   appendMessage: (message) ->
     model = new app.Message()
@@ -66,7 +73,8 @@ class Chat.Controller
       app.getIndent(view, model)
     else
       $('#chat').append(view.render())
-    $('#chat').scrollTop($('#chat')[0].scrollHeight)
+    unless app.context.reply
+      $('#chat').scrollTop($('#chat')[0].scrollHeight)
 
   shiftMessageQueue: =>
     @messageQueue.shift()
@@ -77,15 +85,15 @@ class Chat.Controller
     rand_num = Math.floor(Math.random()*1000)
     @user = new Chat.User("Guest_" + rand_num)
     $('#username-display').html @user.user_name
-    @dispatcher.trigger 'new_user', @user.serialize()
+    @private_chan.trigger 'new_user', @user.serialize()
 
   loginUser: (name) =>
     @user = new Chat.User(name)
     $('#username-display').html 'Signed in as ' + @user.user_name
-    @dispatcher.trigger 'new_user', @user.serialize()
+    @private_chan.trigger 'new_user', @user.serialize()
 
   logoutUser: (name) =>
-    @dispatcher.trigger 'delete_user', @user.serialize()
+    @private_chan.trigger 'delete_user', @user.serialize()
 
   loadMore: =>
     html =

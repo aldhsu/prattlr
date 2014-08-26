@@ -6,6 +6,7 @@ signIn = (data) ->
   $('#sign-up-button').toggle()
   window.chatController.loginUser(username)
   $('#user-settings').toggleClass 'hidden'
+  app.context.username = username
 
 logOut = ->
   username = $("#username-display").attr('data-user-name')
@@ -19,6 +20,7 @@ logOut = ->
       $('#sign-in-ajax').toggle()
       $('#user-settings').toggleClass 'hidden'
       window.location.href = '/'
+      app.context.username = undefined
   })
 
 # Setup Backbone
@@ -39,7 +41,6 @@ jQuery ->
     signIn({username: username})
 
   # Check Url
-  console.log(window.location.pathname)
   # Listen to sign in and handle
   $('#sign-in-ajax').on 'ajax:success', (xhr, data) ->
     try

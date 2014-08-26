@@ -7,12 +7,15 @@ app.MessageView = Backbone.View.extend({
     'click .label': 'toggleFoldIn',
     'click .msg': 'reply'
   },
-  render: function(left) {
-    left = left || 0;
+  render: function() {
     var temp = Handlebars.compile(app.templates.messageView);
     var html = temp(this.model.toJSON());
     this.$el.html(html);
     this.$el.css('margin-left', 5+'px');
+    if (this.model.get('user') .username == app.context.username)
+      this.$el.find('.label').css('background-color', 'green')
+    else if (this.model.get('user'))
+      this.$el.find('.label').css('background-color', 'black')
     return this.$el;
   },
 

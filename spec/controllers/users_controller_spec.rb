@@ -12,7 +12,7 @@ RSpec.describe UsersController, :type => :controller do
         }
       end
 
-      it 'automaticaly log the user in' do
+      it 'automatically logs the user in' do
         expect(session[:user_id]).to eq(User.first.id)
       end
 
