@@ -2,6 +2,7 @@ var app = app || {};
 
 app.MessageView = Backbone.View.extend({
   tagName: 'div',
+  className: 'thread',
   events: {
     'click .label': 'toggleFoldIn',
     'click .msg': 'reply'
@@ -11,13 +12,13 @@ app.MessageView = Backbone.View.extend({
     var temp = Handlebars.compile(app.templates.messageView);
     var html = temp(this.model.toJSON());
     this.$el.html(html);
-    this.$el.css('margin-left', (5)+'px');
+    this.$el.css('margin-left', 5+'px');
     return this.$el;
   },
 
   toggleFoldIn: function(event) {
     event.stopPropagation();
-    $(this.$el.children()[1]).toggle();
+    this.$el.children('.thread').slideToggle();
     this.$el.find('.label').toggleClass('folded')
   },
 
