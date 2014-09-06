@@ -1,4 +1,5 @@
 # Helpers
+
 signIn = (data) ->
   username = data.username
   $("#username-display").attr('data-user-id', data.id)
@@ -23,7 +24,6 @@ logOut = ->
 
 # Setup Backbone
 app.messages = new app.Messages()
-
 jQuery ->
   # Template Get
   app.templates = {
@@ -33,13 +33,12 @@ jQuery ->
   # Listener setup
   window.chatController = new Chat.Controller($('#chat').data('uri'), true);
   app.context = {}
+  app.context.channel = undefined
 
   # Check for already signed in
   if (username = $("#username-display").attr('data-user-name')) != ""
     signIn({username: username})
 
-  # Check Url
-  console.log(window.location.pathname)
   # Listen to sign in and handle
   $('#sign-in-ajax').on 'ajax:success', (xhr, data) ->
     try
@@ -69,6 +68,7 @@ jQuery ->
   # Sign Up listen
   $('#sign-up-button').click ->
     window.location.href = '/users/new'
+
   #Listen to logout
   $('#logout').on 'click', ->
     logOut()

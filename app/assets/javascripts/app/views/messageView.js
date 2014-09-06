@@ -32,5 +32,4 @@ app.MessageView = Backbone.View.extend({
       $('#message').focus();
     }
   }
-
 })
