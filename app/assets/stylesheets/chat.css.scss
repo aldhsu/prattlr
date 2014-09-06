@@ -30,6 +30,7 @@
 }
 #chat{
   word-wrap: break-word;
+  min-height: 70vh;
 }
 
 .hidden {
@@ -58,5 +59,4 @@
 }
 
 html,body{
-    height: 100%
 }

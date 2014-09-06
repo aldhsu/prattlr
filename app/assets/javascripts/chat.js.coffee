@@ -23,19 +23,15 @@ class Chat.Controller
   constructor: (url,useWebSockets) ->
     @messageQueue = []
     @dispatcher = new WebSocketRails(url,useWebSockets)
-    @private_chan = @dispatcher.subscribe('test_room')
-    @private_chan.trigger('new_message', {msg_body: 'chatting in channel'})
+    @channel = @dispatcher.subscribe('javascript')
     @bindEvents()
     @loadMore()
 
   bindEvents: =>
-    # @dispatcher.bind 'new_message', @newMessage
-    # @dispatcher.bind 'user_list', @updateUserList
-    # $('input#user_name').on 'keyup', @updateUserInfo
-    # $('#send').on 'click', @sendMessage
-    # $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13 #run click if keypress = enter
-    @private_chan.bind 'new_message', @newMessage
-    @private_chan.bind 'user_list', @updateUserList
+    @dispatcher.bind 'new_message', @newMessage
+    @dispatcher.bind 'user_list', @updateUserList
+    @channel.bind 'new_message', @newMessage
+    # @channel.bind 'user_list', @updateUserList
     $('input#user_name').on 'keyup', @updateUserInfo
     $('#send').on 'click', @sendMessage
     $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13 #run click if keypress =
@@ -50,9 +46,9 @@ class Chat.Controller
     message = $('#message').val()
     if app.context.reply
       console.log(app.context.reply)
-      @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, parent_id: app.context.reply}
+      @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, parent_id: app.context.reply, room_id: app.context.channel }
     else
-      @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message}
+      @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, room_id: app.context.channel}
     $('#message').val('')
     console.log('sent')
 

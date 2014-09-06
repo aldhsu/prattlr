@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  get 'user/create'
 
-  get 'user/new'
+  get 'socket.io' => 'messages#socketio'
 
   root to: 'public#index'
   resources :sessions, only: [:create, :destroy]
