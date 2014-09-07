@@ -3,7 +3,7 @@ app.changeDate = (message) ->
   message.set('created_at', moment(message.get('created_at')).format('HH:mm:ss DD/MM/YY'))
 
 app.getIndent = (view, message) ->
-  $div = $($("[data-message-id=#{message.get('parent_id')}]").parent('div')[0])
+  $div = $("[data-message-id=#{message.get('parent_id')}]").parent('div').first()
   $div.append(view.render(parseInt($div.css('margin-left'))))
 
 # modified from of PogoApp https://github.com/themgt/ws42-chat.git
@@ -30,19 +30,22 @@ class Chat.Controller
   bindEvents: =>
     # messages to server need to be sent by global channel to be routed
     # server can send back on channel
-    @dispatcher.bind 'new_message', @newMessage
-    @dispatcher.bind 'user_list', @updateUserList
+    # CLIENT SIDE DATA BINDING
     @channel.bind 'new_message', @newMessage
-    # @channel.bind 'user_list', @updateUserList
+    @channel.bind 'user_list', @updateUserList
+    @channel.bind 'user_list', @updateUserList
+    # CLIENT SIDE TRIGGER
     $('input#user_name').on 'keyup', @updateUserInfo
     $('#send').on 'click', (e) =>
       e.preventDefault()
       @sendMessage($('#message').val())
       $('#message').val('')
+      $('#chat').scrollTop($('#chat')[0].scrollHeight)
     $('#message').keypress (e) ->
       $('#send').click() if e.keyCode == 13 #run click if keypress = Enter
 
   newMessage: (message) =>
+    console.log(message)
     @messageQueue.push message
     @shiftMessageQueue() if @messageQueue.length > 15
     @appendMessage message
@@ -50,9 +53,15 @@ class Chat.Controller
   sendMessage: (message) =>
     # try to send message catch if no username
     try
-      # attach parent if available could be sanitised on server
+      # attach parent if available (could be sanitised on server)
       if app.context.reply
-        @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, parent_id: app.context.reply, room_id: app.context.channel }
+        data = {
+          user_name: @user.user_name,
+          msg_body: message,
+          parent_id: app.context.reply,
+          room_id: app.context.channel
+        }
+        @dispatcher.trigger 'new_message', data
       else
         @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, room_id: app.context.channel}
     catch
@@ -67,6 +76,7 @@ class Chat.Controller
     @channel.trigger 'change_username', @user.serialize()
 
   appendMessage: (message) ->
+    console.log('appending')
     model = new app.Message()
     model.attributes = message
     app.changeDate(model)
@@ -75,8 +85,7 @@ class Chat.Controller
       app.getIndent(view, model)
     else
       $('#chat').append(view.render())
-    unless app.context.reply
-      $('#chat').scrollTop($('#chat')[0].scrollHeight)
+
 
   shiftMessageQueue: =>
     @messageQueue.shift()

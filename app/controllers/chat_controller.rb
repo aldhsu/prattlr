@@ -34,7 +34,6 @@ class ChatController < WebsocketRails::BaseController
   end
 
   def new_message
-    puts 'doing new message'
     user = User.find_by(username: data[:user_name])
     if user
       message = Message.create(content: data[:msg_body], user_id: user.id, parent_id: data[:parent_id], room_id: data[:room_id])
@@ -63,11 +62,6 @@ class ChatController < WebsocketRails::BaseController
   def broadcast_user_list
     users = connection_store.collect_all(:user)
     broadcast_message :user_list, users
-  end
-
-  def channel_test
-    puts 'doing channel_test'
-    WebsocketRails[:test_room].trigger(:new_message, {message: 'return from room'})
   end
 
 end

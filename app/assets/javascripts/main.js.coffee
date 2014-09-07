@@ -58,7 +58,7 @@ jQuery ->
           # each changeDate to short
           app.changeDate(message)
           view = new app.MessageView({model: message})
-          #indentation
+          #indentation duplicated logic
           if message.get('parent_id')
             app.getIndent(view, message)
           else

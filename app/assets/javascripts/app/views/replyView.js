@@ -2,7 +2,7 @@ var app = app || {};
 
 app.ReplyView = Backbone.View.extend({
   tagName: 'div',
-  className: 'reply-message',
+  className: 'reply-message thread',
   events: {
     'click button': 'sendMessage',
     'keypress': 'sendMessage'
@@ -19,6 +19,7 @@ app.ReplyView = Backbone.View.extend({
   },
   sendMessage: function(event) {
     if (event.keyCode === 13) {
+      console.log('sending message');
       var message = this.$el.find('.reply-input').val();
       window.chatController.sendMessage(message);
       this.cancel();

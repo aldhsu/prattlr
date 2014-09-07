@@ -15,7 +15,7 @@ app.MessageView = Backbone.View.extend({
     if (this.model.get('user') .username == app.context.username)
       this.$el.find('.label').css('background-color', 'green')
     else if (this.model.get('user'))
-      // this.$el.find('.label').css('background-color', 'black')
+      this.$el.find('.label').css('background-color', 'black')
     return this.$el;
   },
 
@@ -31,7 +31,7 @@ app.MessageView = Backbone.View.extend({
       app.replyView && app.replyView.cancel(); //remove view if it exists
       app.context.reply = this.model.get('id'); //which parent
       app.replyView = new app.ReplyView({model: this.model});
-      this.$el.find('.thread').last().append(app.replyView.render());
+      this.$el.find('.msg').first().after(app.replyView.render());
       $('.reply-input').first().focus();
     }
   }
