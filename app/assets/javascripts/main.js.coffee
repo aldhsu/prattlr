@@ -6,7 +6,7 @@ signIn = (data) ->
   $('#sign-in-ajax').slideToggle()
   $('#sign-up-button').toggle()
   window.chatController.loginUser(username)
-  $('#user-settings').toggleClass 'hidden'
+  $('#user-settings').toggleClass('hidden')
   app.context.username = username
 
 logOut = ->
@@ -19,8 +19,8 @@ logOut = ->
     success: (xhr, data) ->
       $('#sign-up-button').toggle()
       $('#sign-in-ajax').toggle()
-      $('#user-settings').toggleClass 'hidden'
-      window.location.href = '/'
+      $('#user-settings').toggleClass('hidden');
+      # window.location.href = '/'
       app.context.username = undefined
   })
 
@@ -73,5 +73,6 @@ jQuery ->
 
   #Listen to logout
   $('#logout').on 'click', ->
+    console.log('logging out')
     logOut()
 

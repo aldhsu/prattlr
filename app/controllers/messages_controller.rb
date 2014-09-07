@@ -5,6 +5,6 @@ class MessagesController < ApplicationController
 
   def socketio
     # render json: {find: params}
-    render nothing: true
+    # render nothing: true
   end
 end

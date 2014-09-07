@@ -58,7 +58,7 @@ class Chat.Controller
   updateUserInfo: (event) =>
     @user.user_name = $('input#user_name').val()
     $('#username').html @user.user_name
-    @private_chan.trigger 'change_username', @user.serialize()
+    @channel.trigger 'change_username', @user.serialize()
 
   appendMessage: (message) ->
     model = new app.Message()
@@ -81,15 +81,15 @@ class Chat.Controller
     rand_num = Math.floor(Math.random()*1000)
     @user = new Chat.User("Guest_" + rand_num)
     $('#username-display').html @user.user_name
-    @private_chan.trigger 'new_user', @user.serialize()
+    @channel.trigger 'new_user', @user.serialize()
 
   loginUser: (name) =>
     @user = new Chat.User(name)
     $('#username-display').html 'Signed in as ' + @user.user_name
-    @private_chan.trigger 'new_user', @user.serialize()
+    @channel.trigger 'new_user', @user.serialize()
 
   logoutUser: (name) =>
-    @private_chan.trigger 'delete_user', @user.serialize()
+    @channel.trigger 'delete_user', @user.serialize()
 
   loadMore: =>
     html =

@@ -17,6 +17,8 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    authenticate_user
+    binding.pry
     render nothing: true
   end
 
