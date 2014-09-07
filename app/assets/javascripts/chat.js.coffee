@@ -28,29 +28,35 @@ class Chat.Controller
     @loadMore()
 
   bindEvents: =>
+    # messages to server need to be sent by global channel to be routed
+    # server can send back on channel
     @dispatcher.bind 'new_message', @newMessage
     @dispatcher.bind 'user_list', @updateUserList
     @channel.bind 'new_message', @newMessage
     # @channel.bind 'user_list', @updateUserList
     $('input#user_name').on 'keyup', @updateUserInfo
-    $('#send').on 'click', @sendMessage
-    $('#message').keypress (e) -> $('#send').click() if e.keyCode == 13 #run click if keypress =
+    $('#send').on 'click', (e) =>
+      e.preventDefault()
+      @sendMessage($('#message').val())
+      $('#message').val('')
+    $('#message').keypress (e) ->
+      $('#send').click() if e.keyCode == 13 #run click if keypress = Enter
 
   newMessage: (message) =>
     @messageQueue.push message
     @shiftMessageQueue() if @messageQueue.length > 15
     @appendMessage message
 
-  sendMessage: (event) =>
-    event.preventDefault()
-    message = $('#message').val()
-    if app.context.reply
-      console.log(app.context.reply)
-      @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, parent_id: app.context.reply, room_id: app.context.channel }
-    else
-      @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, room_id: app.context.channel}
-    $('#message').val('')
-    console.log('sent')
+  sendMessage: (message) =>
+    # try to send message catch if no username
+    try
+      # attach parent if available could be sanitised on server
+      if app.context.reply
+        @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, parent_id: app.context.reply, room_id: app.context.channel }
+      else
+        @dispatcher.trigger 'new_message', {user_name: @user.user_name, msg_body: message, room_id: app.context.channel}
+    catch
+      alert("Sign in to post messages")
 
   updateUserList: (userList) =>
     $('#user-list').html @userListTemplate(userList)

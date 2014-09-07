@@ -93,15 +93,13 @@
   </script>
 
   <script id='reply-view' type='text/template'>
-    <div id="replying-to">Replying To</div>
-    <div class="message" data-message-id ='{{id}}'>
-      <label class="label label-info" >
-        [{{created_at}}] {{user.username}}
-      </label>
-      <div class="msg reply">{{content}}</div>
-      <button class='btn btn-secondary pull-right'>Cancel</button>
-    </div>
+    <fieldset>
+      <input type="text" class="span7 reply-input">
+      <button id="send" class="btn btn-primary pull-right">Send</button>
+    </fieldset>
   </script>
+
+
 
   </body>
 </html>
