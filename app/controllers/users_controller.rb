@@ -7,6 +7,8 @@ class UsersController < ApplicationController
     else
       if User.find_by(username: params[:user][:username])
         redirect_to new_user_path, flash: {notice: "Username already taken."}
+      elsif params[:user][:username].length > 12 || params[:user][:username].length < 6
+        redirect_to new_user_path, flash: {notice: "Username must be between 6 and 12 characters"}
       else
         redirect_to new_user_path, flash: {notice: "Passwords error."}
       end

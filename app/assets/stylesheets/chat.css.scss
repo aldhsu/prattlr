@@ -1,6 +1,13 @@
 // Place all the styles related to the chat controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+// Mixins
+@mixin respond-to($val, $query) {
+  @media ($val: $query) {
+    @content;
+  }
+}
+
 .label-info {
   display: inline !important;
 }
@@ -62,5 +69,24 @@
   background-color: grey !important;
 }
 
-html,body{
+.connected-users-display {
+  @media handheld {
+    display: none;
+  }
 }
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  .connected-users-display {
+    display: none;
+  }
+  #user-text-input {
+    position: fixed;
+    bottom: 0;
+    width: 240px;
+    }
+  }
+}
+/* Styles */
+

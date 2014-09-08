@@ -9,8 +9,8 @@ User.destroy_all
 Message.destroy_all
 Room.destroy_all
 
-u1 = User.create(username: 'ua', password: 'a', password_confirmation: 'a', email: 'ua@ua.com')
-u2 = User.create(username: 'ub', password: 'b', password_confirmation: 'b', email: 'ub@ub.com')
+u1 = User.create(username: '123456', password: 'a', password_confirmation: 'a', email: 'ua@ua.com')
+u2 = User.create(username: '123457', password: 'b', password_confirmation: 'b', email: 'ub@ub.com')
 
 m1 = Message.create(content: 'first message')
 m2 = Message.create(content: 'second message')

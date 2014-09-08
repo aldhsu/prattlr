@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Prattlr</title>
     <%= csrf_meta_tags %>
 
@@ -16,13 +17,15 @@
   </head>
   <body>
     <div class="wrap">
-      <div class="navbar navbar-fixed-top">
+      <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="navbar-inner">
           <div class="container">
             <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
+            <a class="brand" href="#">Prattlr</a>
+            <div class="container nav-collapse">
             </a>
             <%= form_tag(sessions_path, class: 'navbar-form pull-right', id: 'sign-in-ajax', :method => :post, remote: true) do %>
               <%= text_field_tag :username, nil, placeholder: 'Username', class: 'span2' %>
@@ -30,8 +33,6 @@
               <%= submit_tag 'Sign In', class: 'btn' %>
             <% end %>
             <button class="btn" id="sign-up-button">Sign Up</button>
-            <a class="brand" href="#">Prattlr</a>
-            <div class="container nav-collapse">
               <ul class="nav">
                 <li>
                   <div class="btn-group hidden" id="user-settings">
@@ -65,7 +66,7 @@
             <% end %>
             <%= yield %>
           </div>
-          <div class="span3">
+          <div class="span3 connected-users-display">
             <div class="well sidebar-nav">
               <h3>Users</h3>
               <ul class="nav nav-list" id="user-list">

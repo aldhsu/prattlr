@@ -13,6 +13,7 @@
 class User < ActiveRecord::Base
   validates_uniqueness_of :username
   validates :username, presence: true
+  validates :username, length: {in: 6..12}
   has_secure_password
   has_many :messages
   has_and_belongs_to_many :rooms
