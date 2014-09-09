@@ -28,7 +28,7 @@ logOut = ->
 app.messages = new app.Messages()
 jQuery ->
   #Disable scaling
-  $('<meta>', {name: 'viewport',content: 'user-scalable=no'}).appendTo('head');
+  # $('<meta>', {name: 'viewport',content: 'user-scalable=no'}).appendTo('head');
   # Template Get
   app.templates = {
     messageView: $('#message-view').html()
