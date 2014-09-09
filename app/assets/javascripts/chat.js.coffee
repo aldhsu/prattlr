@@ -38,10 +38,10 @@ class Chat.Controller
     $('input#user_name').on 'keyup', @updateUserInfo
     $('#send').on 'click', (e) =>
       e.preventDefault()
-      @sendMessage($('#message').val())
-      $('#message').val('')
+      @sendMessage($('#message-input').val())
+      $('#message-input').val('')
       $('#chat').scrollTop($('#chat')[0].scrollHeight)
-    $('#message').keypress (e) ->
+    $('#message-input').keypress (e) ->
       $('#send').click() if e.keyCode == 13 #run click if keypress = Enter
 
   newMessage: (message) =>

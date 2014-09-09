@@ -10,7 +10,20 @@
 .hidden {
   opacity: 0;
 }
+
 // chat messages
+body {
+  @include responsive {
+    padding: 0;
+  }
+}
+
+.navbar {
+  @include responsive {
+    padding: 0;
+    margin: 0;
+  }
+}
 .label-info {
   display: inline !important;
 }
@@ -24,6 +37,12 @@ label.label.label-info.identifier {
   height: 70vh;
   @include responsive {
     height: 60vh;
+  }
+}
+
+.wrap {
+  @include responsive {
+    width: 100vw;
   }
 }
 

@@ -66,7 +66,9 @@ jQuery ->
           else
             $target.append(view.render())
       )
+    #put messages on
     $('#chat').prepend($target)
+    #remove load all
     $(this).parent().remove()
 
   # Sign Up listen
