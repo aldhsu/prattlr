@@ -87,7 +87,7 @@
   <script id='message-view' type='text/template'>
     <div class="message" data-message-id ='{{id}}' id='message_{{id}}'>
       <label class="label label-info identifier" >
-        [{{created_at}}] {{user.username}}
+        <span class="time-stamp">[{{created_at}}]</span> <span class="message-username">{{user.username}} </span>
       </label>
       <div class="msg">{{content}}<div>
     </div>

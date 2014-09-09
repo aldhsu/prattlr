@@ -9,7 +9,7 @@ class ChatController < WebsocketRails::BaseController
   end
 
   def system_msg(ev, msg)
-    broadcast_message ev, {
+    WebsocketRails[:javascript].trigger ev, {
       user: {username: 'system'},
       created_at: Time.now.to_s(:short),
       content: msg
@@ -61,7 +61,7 @@ class ChatController < WebsocketRails::BaseController
 
   def broadcast_user_list
     users = connection_store.collect_all(:user)
-    broadcast_message :user_list, users
+    WebsocketRails[:javascript].trigger user_list, users
   end
 
 end

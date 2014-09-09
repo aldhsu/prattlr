@@ -1,20 +1,30 @@
 // Place all the styles related to the chat controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-// Mixins
-@mixin respond-to($val, $query) {
-  @media ($val: $query) {
-    @content;
+// helper
+@mixin responsive() {
+  @media screen and (max-width: 320px) {
+    @content
   }
 }
-
+.hidden {
+  opacity: 0;
+}
+// chat messages
 .label-info {
   display: inline !important;
 }
-
+label.label.label-info.identifier {
+  line-height: 20px;
+}
 #chat {
   height: 290px;
   overflow: auto;
+  word-wrap: break-word;
+  height: 70vh;
+  @include responsive {
+    height: 60vh;
+  }
 }
 
 .msg {
@@ -34,19 +44,16 @@
 }
 
 .identifier {
-  width: 20%;
   vertical-align: top;
   padding-top: 1px;
 }
 
-#chat{
-  word-wrap: break-word;
-  min-height: 70vh;
+.time-stamp {
+  @include responsive {
+    display: none;
+  }
 }
 
-.hidden {
-  opacity: 0;
-}
 
 .message {
   width: 100%;
@@ -61,31 +68,26 @@
   }
 }
 
-.reply-message {
-  margin-bottom: 15px;
-}
-
+// folded in messages
 .folded {
   background-color: grey !important;
 }
 
-.connected-users-display {
-  @media handheld {
-    display: none;
-  }
+// chat input
+#message-input {
+  display: inline-block;
+  max-width: 70%;
 }
+
 /* Smartphones (portrait and landscape) ----------- */
-@media only screen
-and (min-device-width : 320px)
-and (max-device-width : 480px) {
-  .connected-users-display {
+.connected-users-display {
+  @include responsive {
     display: none;
   }
-  #user-text-input {
-    position: fixed;
-    bottom: 0;
-    width: 240px;
-  }
+  // #user-text-input {
+  //   position: fixed;
+  //   bottom: 0;
+  //   width: 240px;
+  // }
 }
-/* Styles */
 
