@@ -39,6 +39,9 @@ class Chat.Controller
     $('#send').on 'click', @rootMessage
     $('#message-input').keypress (e) ->
       $('#send').click() if e.keyCode == 13 #run click if keypress = Enter
+    $('#message-input').on 'focus', ->
+      app.replyView && app.replyView.cancel()
+      $('#chat').scrollTop($('#chat')[0].scrollHeight)
 
   newMessage: (message) =>
     console.log(message)
@@ -48,7 +51,6 @@ class Chat.Controller
 
   rootMessage: (e) =>
       e.preventDefault()
-      app.replyView && app.replyView.cancel()
       @sendMessage($('#message-input').val())
       $('#message-input').val('')
       $('#chat').scrollTop($('#chat')[0].scrollHeight)
