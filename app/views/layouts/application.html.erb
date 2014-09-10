@@ -58,7 +58,7 @@
       <div class="container">
         <div class="content">
           <div class="row">
-            <div class="span9">
+            <div class="span12">
             <% if notice %>
               <div class="notice"><%= notice %></div>
             <% elsif alert %>
@@ -66,14 +66,14 @@
             <% end %>
             <%= yield %>
           </div>
-          <div class="span3 connected-users-display">
+          <!-- <div class="span3 connected-users-display">
             <div class="well sidebar-nav">
               <h3>Users</h3>
               <ul class="nav nav-list" id="user-list">
                 <li class="nav-header">Active</li>
               </ul>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div><!--/row-->
