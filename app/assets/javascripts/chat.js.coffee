@@ -36,11 +36,7 @@ class Chat.Controller
     @channel.bind 'user_list', @updateUserList
     # CLIENT SIDE TRIGGER
     $('input#user_name').on 'keyup', @updateUserInfo
-    $('#send').on 'click', (e) =>
-      e.preventDefault()
-      @sendMessage($('#message-input').val())
-      $('#message-input').val('')
-      $('#chat').scrollTop($('#chat')[0].scrollHeight)
+    $('#send').on 'click', @rootMessage
     $('#message-input').keypress (e) ->
       $('#send').click() if e.keyCode == 13 #run click if keypress = Enter
 
@@ -49,6 +45,13 @@ class Chat.Controller
     @messageQueue.push message
     @shiftMessageQueue() if @messageQueue.length > 15
     @appendMessage message
+
+  rootMessage: (e) =>
+      e.preventDefault()
+      app.replyView && app.replyView.cancel()
+      @sendMessage($('#message-input').val())
+      $('#message-input').val('')
+      $('#chat').scrollTop($('#chat')[0].scrollHeight)
 
   sendMessage: (message) =>
     # try to send message catch if no username
